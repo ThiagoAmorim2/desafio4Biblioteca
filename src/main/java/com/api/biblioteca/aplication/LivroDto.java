@@ -4,11 +4,14 @@ import com.api.biblioteca.domain.livro.Livro;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class LivroDto {
+
     @JsonProperty(value = "titulo")
     private String tituloLivro;
+
     @JsonProperty(value = "classificacao")
     private String classificacaoLivro;
-    @JsonProperty(value = "qtdPaginas")
+
+    @JsonProperty(value = "qdtPaginas")
     private Integer qtdPaginasLivro;
 
     public LivroDto(String tituloLivro, String classificacaoLivro, Integer qtdPaginasLivro) {
@@ -28,10 +31,6 @@ public class LivroDto {
     public Integer getQtdPaginasLivro() {
         return qtdPaginasLivro;
     }
-
-//    public Livro criarLivro() {
-//        return new Livro(tituloLivro, classificacaoLivro, qtdPaginasLivro);
-//    }
 
 }
 

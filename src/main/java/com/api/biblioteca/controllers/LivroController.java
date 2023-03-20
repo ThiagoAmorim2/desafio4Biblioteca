@@ -9,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping(value = "/livro")
 public class LivroController {
@@ -21,14 +23,12 @@ public class LivroController {
     }
 
     @GetMapping(value = "/buscarlivros")
-    public String buscarLivros(){
-        return "Bateu aqui";
+    public List<Livro> buscarLivros(){
+        return livroService.listarLivros();
     }
 
     @PostMapping(value = "/cadastrar-livro")
     public void cadastrarLivro(@RequestBody LivroDto livroDto){
-        LivroMapper livroMapper = new LivroMapper();
-        Livro livro = livroMapper.cadastrarLivroDtoParaLivro(livroDto);
-        livroService.adicionarUmLivro(livro);
+        livroService.adicionarUmLivro(livroDto);
     }
 }
