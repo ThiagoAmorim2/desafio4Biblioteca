@@ -32,5 +32,16 @@ public class LivroDto {
         return qtdPaginasLivro;
     }
 
+    public void setTituloLivro(String tituloLivro) {
+        this.tituloLivro = tituloLivro;
+    }
+
+    public void setClassificacaoLivro(String classificacaoLivro) {
+        this.classificacaoLivro = classificacaoLivro;
+    }
+
+    public void setQtdPaginasLivro(Integer qtdPaginasLivro) {
+        this.qtdPaginasLivro = qtdPaginasLivro;
+    }
 }
 

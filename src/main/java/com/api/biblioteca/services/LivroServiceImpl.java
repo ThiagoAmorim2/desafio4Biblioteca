@@ -1,12 +1,10 @@
-package com.api.biblioteca.infra.services;
+package com.api.biblioteca.services;
 
 import com.api.biblioteca.aplication.LivroDto;
 import com.api.biblioteca.domain.livro.Livro;
-import com.api.biblioteca.domain.livro.RepositorioDeLivros;
-import com.api.biblioteca.infra.mappers.LivroMapper;
-import com.api.biblioteca.infra.repository.LivroRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Lazy;
+import com.api.biblioteca.domain.livro.LivroServiceBase;
+import com.api.biblioteca.repository.LivroRepository;
+import com.api.biblioteca.utils.mappers.LivroMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -18,11 +16,12 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class LivroService implements RepositorioDeLivros {
+public class LivroServiceImpl implements LivroServiceBase {
 
     private final LivroRepository livroRepository;
 
-    public LivroService(LivroRepository livroRepository) {
+
+    public LivroServiceImpl(LivroRepository livroRepository) {
         this.livroRepository = livroRepository;
     }
 
@@ -50,4 +49,27 @@ public class LivroService implements RepositorioDeLivros {
         return ResponseEntity.status(HttpStatus.OK).body(livroOptional.get());
 
     }
+
+    public ResponseEntity<Object> atualizarLivro(Long id, LivroDto livroDto) {
+        Optional<Livro> livroOptional = livroRepository.findById(id);
+        if (!livroOptional.isPresent()) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Livro não encontrado");
+        }
+        Livro livro = new Livro(
+                livroDto.getTituloLivro(),
+                livroDto.getClassificacaoLivro(),
+                livroDto.getQtdPaginasLivro());
+        livro.setId(livroOptional.get().getId());
+        return ResponseEntity.status(HttpStatus.OK).body(livroRepository.save(livro));
+    }
+
+
+//    @Transactional
+//    public ResponseEntity<Object> deletarLivro(@PathVariable Long id) {
+//        Optional <Livro> livroOptional = livroRepository.findById(id);
+//        if(!livroOptional.isPresent()){
+//            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Livro não encontrado");
+//        }
+//        return ResponseEntity.status(HttpStatus.OK).body(livroRepository.delete(livroOptional.get()));
+//    }
 }
