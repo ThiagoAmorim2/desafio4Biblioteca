@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping(value = "/livro")
@@ -22,9 +23,14 @@ public class LivroController {
         this.livroService = livroService;
     }
 
-    @GetMapping(value = "/buscarlivros")
+    @GetMapping(value = "/buscar-livros")
     public List<Livro> buscarLivros(){
         return livroService.listarLivros();
+    }
+
+    @GetMapping(value = "/buscar-livros/{id}")
+    public ResponseEntity<Object> buscarPorId(@PathVariable Long id){
+        return livroService.buscarPorId(id);
     }
 
     @PostMapping(value = "/cadastrar-livro")

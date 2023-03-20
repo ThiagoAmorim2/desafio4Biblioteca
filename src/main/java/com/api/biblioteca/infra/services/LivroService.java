@@ -11,9 +11,11 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class LivroService implements RepositorioDeLivros {
@@ -39,4 +41,13 @@ public class LivroService implements RepositorioDeLivros {
     }
 
 
+    public ResponseEntity<Object> buscarPorId(@PathVariable Long id) {
+        Optional <Livro> livroOptional = livroRepository.findById(id);
+        if(!livroOptional.isPresent()){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Livro não encontrado");
+        }
+
+        return ResponseEntity.status(HttpStatus.OK).body(livroOptional.get());
+
+    }
 }
