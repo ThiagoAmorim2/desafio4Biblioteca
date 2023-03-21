@@ -1,6 +1,6 @@
 package com.api.biblioteca.utils.mappers;
 
-import com.api.biblioteca.aplication.LivroDto;
+import com.api.biblioteca.dto.livro.LivroDto;
 import com.api.biblioteca.domain.livro.Livro;
 
 public class LivroMapper {

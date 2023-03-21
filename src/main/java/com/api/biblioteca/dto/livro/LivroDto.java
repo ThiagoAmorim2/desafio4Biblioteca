@@ -1,6 +1,5 @@
-package com.api.biblioteca.aplication;
+package com.api.biblioteca.dto.livro;
 
-import com.api.biblioteca.domain.livro.Livro;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class LivroDto {

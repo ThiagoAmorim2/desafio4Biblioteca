@@ -1,6 +1,6 @@
 package com.api.biblioteca.controllers;
 
-import com.api.biblioteca.aplication.LivroDto;
+import com.api.biblioteca.dto.livro.LivroDto;
 import com.api.biblioteca.domain.livro.Livro;
 import com.api.biblioteca.services.LivroServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
