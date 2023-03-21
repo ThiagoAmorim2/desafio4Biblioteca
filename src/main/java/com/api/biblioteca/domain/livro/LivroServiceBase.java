@@ -16,4 +16,6 @@ public interface LivroServiceBase {
 
     ResponseEntity<Object> atualizarLivro(Long id, LivroDto livroDto);
 
+    void deletarLivro(@PathVariable Long id);
+
 }
