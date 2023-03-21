@@ -40,8 +40,8 @@ public class LivroController {
         return livroServiceImpl.atualizarLivro(id, livroDto);
     }
 
-//    @DeleteMapping(value = "/buscar-livros/{id}")
-//    public ResponseEntity<Object> deletarLivro(@PathVariable Long id){
-//        return livroServiceImpl.deletarLivro(id);
-//    }
+    @DeleteMapping(value = "/buscar-livros/{id}")
+    public void deletarLivro(@PathVariable Long id){
+        livroServiceImpl.deletarLivro(id);
+    }
 }

@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.List;
 import java.util.Optional;
@@ -64,12 +65,12 @@ public class LivroServiceImpl implements LivroServiceBase {
     }
 
 
-//    @Transactional
-//    public ResponseEntity<Object> deletarLivro(@PathVariable Long id) {
-//        Optional <Livro> livroOptional = livroRepository.findById(id);
+    @Transactional
+    public void deletarLivro(@PathVariable Long id) {
+        Optional<Livro> livroOptional = livroRepository.findById(id);
 //        if(!livroOptional.isPresent()){
-//            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Livro não encontrado");
+//            return "Livro não encontrado";
 //        }
-//        return ResponseEntity.status(HttpStatus.OK).body(livroRepository.delete(livroOptional.get()));
-//    }
+        livroRepository.deleteById(livroOptional.get().getId());
+    }
 }
