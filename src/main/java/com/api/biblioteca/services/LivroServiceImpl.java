@@ -1,8 +1,8 @@
 package com.api.biblioteca.services;
 
-import com.api.biblioteca.dto.livro.LivroDto;
 import com.api.biblioteca.domain.livro.Livro;
 import com.api.biblioteca.domain.livro.LivroServiceBase;
+import com.api.biblioteca.dto.livro.LivroDto;
 import com.api.biblioteca.repository.LivroRepository;
 import com.api.biblioteca.utils.mappers.LivroMapper;
 import org.springframework.http.HttpStatus;
@@ -11,7 +11,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.List;
 import java.util.Optional;
@@ -28,10 +27,10 @@ public class LivroServiceImpl implements LivroServiceBase {
 
     @Override
     @Transactional
-    public ResponseEntity<Object> adicionarUmLivro(@RequestBody LivroDto livroNovoDto){
-            LivroMapper livroMapper = new LivroMapper();
-            Livro livroNovo = livroMapper.cadastrarLivroDtoParaLivro(livroNovoDto);
-            return ResponseEntity.status(HttpStatus.CREATED).body(livroRepository.save(livroNovo));
+    public Livro adicionarUmLivro(@RequestBody LivroDto livroNovoDto) {
+        LivroMapper livroMapper = new LivroMapper();
+        Livro livroNovo = livroMapper.cadastrarLivroDtoParaLivro(livroNovoDto);
+        return livroRepository.save(livroNovo);
     }
 
 
@@ -41,36 +40,31 @@ public class LivroServiceImpl implements LivroServiceBase {
     }
 
 
-    public ResponseEntity<Object> buscarPorId(@PathVariable Long id) {
-        Optional <Livro> livroOptional = livroRepository.findById(id);
-        if(!livroOptional.isPresent()){
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Livro não encontrado");
-        }
-
-        return ResponseEntity.status(HttpStatus.OK).body(livroOptional.get());
-
-    }
-
-    public ResponseEntity<Object> atualizarLivro(Long id, LivroDto livroDto) {
+    public Livro buscarPorId(@PathVariable Long id) throws Exception {
         Optional<Livro> livroOptional = livroRepository.findById(id);
         if (!livroOptional.isPresent()) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Livro não encontrado");
+            throw new Exception();
+        }
+        return livroOptional.get();
+    }
+
+    public Livro atualizarLivro(Long id, LivroDto livroDto) throws Exception {
+        Optional<Livro> livroOptional = livroRepository.findById(id);
+        if (!livroOptional.isPresent()) {
+            throw new Exception();
         }
         Livro livro = new Livro(
                 livroDto.getTituloLivro(),
                 livroDto.getClassificacaoLivro(),
                 livroDto.getQtdPaginasLivro());
         livro.setId(livroOptional.get().getId());
-        return ResponseEntity.status(HttpStatus.OK).body(livroRepository.save(livro));
+        return livroRepository.save(livro);
     }
 
 
     @Transactional
     public void deletarLivro(@PathVariable Long id) {
         Optional<Livro> livroOptional = livroRepository.findById(id);
-//        if(!livroOptional.isPresent()){
-//            return "Livro não encontrado";
-//        }
         livroRepository.deleteById(livroOptional.get().getId());
     }
 }

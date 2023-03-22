@@ -4,6 +4,7 @@ import com.api.biblioteca.dto.livro.LivroDto;
 import com.api.biblioteca.domain.livro.Livro;
 import com.api.biblioteca.services.LivroServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -21,23 +22,23 @@ public class LivroController {
     }
 
     @GetMapping(value = "/buscar-livros")
-    public List<Livro> buscarLivros(){
-        return livroServiceImpl.listarLivros();
+    public ResponseEntity<List<Livro>> buscarLivros(){
+        return ResponseEntity.ok().body(livroServiceImpl.listarLivros());
     }
 
     @GetMapping(value = "/buscar-livros/{id}")
-    public ResponseEntity<Object> buscarPorId(@PathVariable Long id){
-        return livroServiceImpl.buscarPorId(id);
+    public ResponseEntity<Object> buscarPorId(@PathVariable Long id) throws Exception {
+        return ResponseEntity.ok(livroServiceImpl.buscarPorId(id));
     }
 
     @PostMapping(value = "/cadastrar-livro")
-    public ResponseEntity<Object> cadastrarLivro(@RequestBody LivroDto livroDto){
-        return livroServiceImpl.adicionarUmLivro(livroDto);
+    public ResponseEntity<Livro> cadastrarLivro(@RequestBody LivroDto livroDto){
+        return ResponseEntity.status(HttpStatus.CREATED).body(livroServiceImpl.adicionarUmLivro(livroDto));
     }
 
     @PutMapping(value = "/atualizar-livro/{id}")
-    public ResponseEntity<Object> atualizarLivro(@PathVariable Long id, @RequestBody LivroDto livroDto){
-        return livroServiceImpl.atualizarLivro(id, livroDto);
+    public ResponseEntity<Livro> atualizarLivro(@PathVariable Long id, @RequestBody LivroDto livroDto) throws Exception {
+        return ResponseEntity.ok(livroServiceImpl.atualizarLivro(id, livroDto));
     }
 
     @DeleteMapping(value = "/buscar-livros/{id}")

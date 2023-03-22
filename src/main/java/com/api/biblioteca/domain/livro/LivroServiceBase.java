@@ -9,12 +9,12 @@ import java.util.List;
 
 public interface LivroServiceBase {
 
-    ResponseEntity<Object> adicionarUmLivro(@RequestBody LivroDto livroNovoDto);
+    Livro adicionarUmLivro(@RequestBody LivroDto livroNovoDto);
     List<Livro> listarLivros();
 
-    ResponseEntity<Object> buscarPorId(@PathVariable Long id);
+    Livro buscarPorId(@PathVariable Long id) throws Exception;
 
-    ResponseEntity<Object> atualizarLivro(Long id, LivroDto livroDto);
+    Livro atualizarLivro(Long id, LivroDto livroDto) throws Exception;
 
     void deletarLivro(@PathVariable Long id);
 
